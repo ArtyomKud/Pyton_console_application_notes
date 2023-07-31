@@ -1,16 +1,33 @@
-# This is a sample Python script.
+class Note:
+    __id = []
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+    def __new__(cls):
+        cls.__id.append(get_new_id())
+        if len(cls.__id) >= 2 and cls.__id[-2] >= cls.__id[-1]:
+            cls.__id[-1] = cls.__id[-2] + 1
+        return super().__new__(cls)
 
+    def __init__(self):
+        self.id = self.get_id()
+        self.date = None
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    @classmethod
+    def get_id(cls):
+        return cls.__id[-1]
 
+    @property
+    def data(self):
+        return self._data
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    @data.setter
+    def data(self, d):
+        self._data = d
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, t):
+        self._title = t
+
