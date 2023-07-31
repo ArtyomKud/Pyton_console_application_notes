@@ -338,5 +338,70 @@ class ListNotes:
                     else:
                         pass
             else:
-                print(f'Такого id({id}) не существует')
+                print(f'Данного id({id}) не существует')
 
+def clear():
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
+
+
+def get_new_id():
+    with open('NOTES.json', 'r', encoding='UTF-8') as data:
+        try:
+            tmp = json.load(data)
+            res = tmp[-1]
+            return res[str(max(map(int, res.keys())))]['id'] + 1
+        except:
+            return 1
+
+
+def commands():
+    print('''Доступные команды:
+    add - создать заметку
+    edit - редактировать заметку
+    edjs - редактировать заметку из файла json
+    rm - удалить заметку
+    rmjs - удалить элемент из файла json
+    ex - отправить заметки в json файл
+    im - вывести в консоль все заметки из json файла
+    clear - очистить json файл
+    print - вывести заметки в консоль
+    exit - закрыть приложение ''')
+
+
+prog = True
+print('Приветствую!')
+List = ListNotes()
+while prog:
+    commands()
+    print('Введите команду: ')
+    tmp = input()
+    clear()
+    match tmp:
+        case 'add':
+            List.add()
+        case 'edit':
+            List.edit()
+        case 'edjs':
+            List.edit_json()
+        case 'rm':
+            List.rm()
+        case 'rmjs':
+            List.del_from_json()
+        case 'ex':
+            List.output()
+        case 'im':
+            List.input()
+            print('-------------')
+        case 'clear':
+            List.clear()
+        case 'print':
+            List.print()
+        case 'exit':
+            prog = False
+        case _:
+            print('Неверная команда')
+clear()
+print('До свидания!')
